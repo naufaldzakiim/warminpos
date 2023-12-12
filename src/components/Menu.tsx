@@ -8,11 +8,22 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
-} from '@ionic/react';
-
-import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import './Menu.css';
+  IonButton,
+} from "@ionic/react";
+import { useLocation } from "react-router-dom";
+import {
+  personCircleSharp,
+  personCircleOutline,
+  gridSharp,
+  gridOutline,
+  listSharp,
+  listOutline,
+  powerSharp,
+  powerOutline,
+} from "ionicons/icons";
+import { Stack, Button } from "@mantine/core";
+import { IoPower } from "react-icons/io5";
+import "./Menu.css";
 
 interface AppPage {
   url: string;
@@ -23,75 +34,68 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Inbox',
-    url: '/folder/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    title: "Dashboard",
+    url: "/dashboard",
+    iosIcon: gridOutline,
+    mdIcon: gridSharp,
   },
   {
-    title: 'Outbox',
-    url: '/folder/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    title: "Pesanan",
+    url: "/orders",
+    iosIcon: listOutline,
+    mdIcon: listSharp,
   },
   {
-    title: 'Favorites',
-    url: '/folder/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
+    title: "Profile",
+    url: "/profile",
+    iosIcon: personCircleOutline,
+    mdIcon: personCircleSharp,
   },
-  {
-    title: 'Archived',
-    url: '/folder/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
-  },
-  {
-    title: 'Trash',
-    url: '/folder/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/folder/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
-  }
 ];
-
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const Menu: React.FC = () => {
   const location = useLocation();
+  const baseRoute = "/" + location.pathname.split("/")[1];
 
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-                  <IonLabel>{appPage.title}</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            );
-          })}
-        </IonList>
-
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon aria-hidden="true" slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
-        </IonList>
+        <Stack h="100%" w="100%" justify="space-between">
+          <IonList id="inbox-list">
+            <IonListHeader>WarmInPos</IonListHeader>
+            <IonNote>Warung Cabang 1 | Shift 1</IonNote>
+            {appPages.map((appPage, index) => {
+              return (
+                <IonMenuToggle key={index} autoHide={false}>
+                  <IonItem
+                    className={baseRoute === appPage.url ? "selected" : ""}
+                    routerLink={appPage.url}
+                    routerDirection="none"
+                    lines="none"
+                    detail={false}
+                  >
+                    <IonIcon
+                      aria-hidden="true"
+                      slot="start"
+                      ios={appPage.iosIcon}
+                      md={appPage.mdIcon}
+                    />
+                    <IonLabel>{appPage.title}</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+              );
+            })}
+          </IonList>
+          <IonButton
+            fill="solid"
+            expand="block"
+            color="danger"
+            onClick={() => {}}
+          >
+            <IonIcon slot="start" icon={powerOutline}></IonIcon>
+            Logout
+          </IonButton>
+        </Stack>
       </IonContent>
     </IonMenu>
   );
