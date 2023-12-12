@@ -1,0 +1,8 @@
+{
+  "name": "WarmInPos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "4af2bd11"
+}
