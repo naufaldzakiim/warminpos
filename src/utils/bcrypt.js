@@ -13,21 +13,9 @@ const comparePassword = (password, hash) => {
   return res;
 };
 
-// async function checkUser(username, password) {
-//   //... fetch user from a db etc.
-
-//   const match = await bcrypt.compare(password, user.passwordHash);
-
-//   if(match) {
-//       //login
-//   }
-
-//   //...
-// }
-
-const hash = encryptPassword(myPlaintextPassword);
-console.log(hash);
-const res = comparePassword(myPlaintextPassword, hash);
-console.log(res);
+// const hash = encryptPassword(myPlaintextPassword);
+// console.log(hash);
+// const res = comparePassword(myPlaintextPassword, hash);
+// console.log(res);
 
 export { encryptPassword, comparePassword };

@@ -26,4 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Optional eslint cache
+
 .eslintcache
+.env
+constants.ts

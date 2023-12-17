@@ -58,12 +58,6 @@ const appPages: AppPage[] = [
     mdIcon: peopleSharp,
   },
   {
-    title: "Pesanan",
-    url: "/orders",
-    iosIcon: listOutline,
-    mdIcon: listSharp,
-  },
-  {
     title: "Profile",
     url: "/profile",
     iosIcon: personCircleOutline,
