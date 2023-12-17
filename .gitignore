@@ -30,3 +30,4 @@ yarn-error.log*
 .eslintcache
 .env
 constants.ts
+/android

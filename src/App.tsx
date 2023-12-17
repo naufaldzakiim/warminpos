@@ -15,6 +15,9 @@ import OrderDetail from "./pages/OrderDetail";
 import AddOrder from "./pages/AddOrder";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
+import RoleList from "./pages/RoleList";
+import AddRole from "./pages/AddRole";
+import EditRole from "./pages/EditRole";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -44,26 +47,26 @@ export const UserContext = createContext<any>(null);
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
 
-  if (user === null) {
-    return (
-      <IonApp>
-        <UserContext.Provider
-          value={{
-            user,
-            setUser,
-          }}
-        >
-          <IonReactRouter>
-            <IonRouterOutlet id="main" placeholder={null}>
-              <Redirect exact from="/" to="/login" />
-              <Route path="/login" component={Login} />
-              <Route render={() => <Redirect to="/login" />} />
-            </IonRouterOutlet>
-          </IonReactRouter>
-        </UserContext.Provider>
-      </IonApp>
-    );
-  }
+  // if (user === null) {
+  //   return (
+  //     <IonApp>
+  //       <UserContext.Provider
+  //         value={{
+  //           user,
+  //           setUser,
+  //         }}
+  //       >
+  //         <IonReactRouter>
+  //           <IonRouterOutlet id="main" placeholder={null}>
+  //             <Redirect exact from="/" to="/login" />
+  //             <Route path="/login" component={Login} />
+  //             {/* <Route render={() => <Redirect to="/login" />} /> */}
+  //           </IonRouterOutlet>
+  //         </IonReactRouter>
+  //       </UserContext.Provider>
+  //     </IonApp>
+  //   );
+  // }
 
   return (
     <IonApp>
@@ -76,16 +79,19 @@ const App: React.FC = () => {
         <IonReactRouter>
           <IonSplitPane contentId="main">
             {/* {user.role == 1 && <MenuOwner/>} */}
-            <MenuOwner />
-            {/* <Menu /> */}
+            {/* <MenuOwner /> */}
+            <Menu />
             <IonRouterOutlet id="main" placeholder={null}>
               <Redirect exact from="/" to="/dashboard" />
               <Route path="/dashboard" component={Dashboard} />
-              {/* <Route path="/orders" component={OrderList} />
-              <Route path="/orders/new" component={AddOrder} /> */}
+              <Route path="/orders" component={OrderList} />
+              <Route path="/orders/new" component={AddOrder} />
+              {/* <Route path="/orders/:id" component={OrderDetail} /> */}
+              <Route path="/roles" component={RoleList} />
+              <Route path="/roles/new" component={AddRole} />
+              <Route path="/roles/:id/edit" component={EditRole} />
               <Route path="/profile" component={Profile} />
-              <Route path="/orders/:id" component={OrderDetail} />
-              <Route render={() => <Redirect to="/dashboard" />} />
+              {/* <Route render={() => <Redirect to="/dashboard" />} /> */}
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>

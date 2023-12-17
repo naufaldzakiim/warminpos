@@ -83,7 +83,7 @@ const Menu: React.FC = () => {
         <Stack h="100%" w="100%" justify="space-between">
           <IonList id="inbox-list">
             <IonListHeader>WarmInPos</IonListHeader>
-            <IonNote>Halo {user.name}</IonNote>
+            <IonNote>Halo</IonNote>
             {appPages.map((appPage, index) => {
               return (
                 <IonMenuToggle key={index} autoHide={false}>

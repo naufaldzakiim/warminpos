@@ -13,9 +13,9 @@ const comparePassword = (password, hash) => {
   return res;
 };
 
-// const hash = encryptPassword(myPlaintextPassword);
-// console.log(hash);
-// const res = comparePassword(myPlaintextPassword, hash);
-// console.log(res);
+const hash = encryptPassword(myPlaintextPassword);
+console.log(hash);
+const res = comparePassword(myPlaintextPassword, hash);
+console.log(res);
 
 export { encryptPassword, comparePassword };

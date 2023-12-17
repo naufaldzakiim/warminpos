@@ -1,33 +1,20 @@
 import {
   IonButton,
   IonContent,
-  IonHeader,
-  IonMenuButton,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonInput,
   IonImg,
+  IonToast
 } from "@ionic/react";
-import { Center, Box, Stack } from "@mantine/core";
-import React, { useEffect, useState, useContext } from "react";
+import { Center, Box, Stack, Text } from "@mantine/core";
+import React, { useContext, useState } from "react";
 import { supabase } from "../api/supabaseClient";
 import { UserContext } from "../App";
-import bcrypt from "bcrypt";
 import { compareSync } from "bcrypt-ts";
 
 const Login: React.FC = () => {
   const { user, setUser } = useContext<any>(UserContext);
-  const [data, setData] = useState<any>([]);
-
-  const getData = async (username: string) => {
-    const { data, error } = await supabase
-      .from("users")
-      .select()
-      .eq("username", username);
-    console.log("ini data", data);
-    setData(data);
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
@@ -49,10 +36,10 @@ const Login: React.FC = () => {
         if (isMatched) {
           setUser(user);
         } else {
-          alert("Username atau Password Salah");
+          setIsOpen(true);
         }
       } else {
-        alert("Username atau Password salah");
+        setIsOpen(true);
       }
     } catch (error) {
       console.log(error);
@@ -73,6 +60,7 @@ const Login: React.FC = () => {
             display: "flex",
             flexDirection: "column",
             margin: "0 auto",
+            padding: "0 25px",
             maxWidth: "600px",
             gap: "1rem",
           }}
@@ -81,20 +69,28 @@ const Login: React.FC = () => {
             type="text"
             label="Username"
             name="username"
+            labelPlacement="stacked"
             required
-            style={inputStyle}
+            style={{borderBottom: "1px solid #ccc"}}
           />
           <IonInput
             type="password"
             label="Password"
             name="password"
+            labelPlacement="stacked"
             required
-            style={inputStyle}
+            style={{borderBottom: "1px solid #ccc"}}
           />
           <IonButton expand="block" type="submit">
             Login
           </IonButton>
         </form>
+        <IonToast
+          isOpen={isOpen}
+          message="Username atau Password salah"
+          onDidDismiss={() => setIsOpen(false)}
+          duration={5000}
+        ></IonToast>
       </IonContent>
     </IonPage>
   );
@@ -103,11 +99,7 @@ const Login: React.FC = () => {
 const imgStyle = {
   maxWidth: "300px",
   height: "auto",
-  margin: "0 auto",
-};
-
-const inputStyle = {
-  border: "1px solid #ccc",
+  margin: "25px auto 25px auto",
 };
 
 export default Login;
