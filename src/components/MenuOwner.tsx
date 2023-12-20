@@ -53,7 +53,7 @@ const appPages: AppPage[] = [
   },
   {
     title: "Karyawan",
-    url: "/employee",
+    url: "/employees",
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
   },

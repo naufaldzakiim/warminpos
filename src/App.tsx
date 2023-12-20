@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import RolesPage from "./pages/RolesPage";
+import EmployeesPage from "./pages/EmployeesPage";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -56,19 +57,19 @@ const App: React.FC = () => {
     console.log("isAuth di app", isAuth);
   }, [user]);
 
-  if (!isAuth) {
-    return (
-      <IonApp>
-        <IonReactRouter>
-          <IonRouterOutlet id="main" placeholder={null}>
-            <Route exact path="/login" component={Login} />
-            <Redirect exact from="/" to="/login" />
-            <Route render={() => <Redirect to="/login" />} />
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
-    );
-  }
+  // if (!isAuth) {
+  //   return (
+  //     <IonApp>
+  //       <IonReactRouter>
+  //         <IonRouterOutlet id="main" placeholder={null}>
+  //           <Route exact path="/login" component={Login} />
+  //           <Redirect exact from="/" to="/login" />
+  //           <Route render={() => <Redirect to="/login" />} />
+  //         </IonRouterOutlet>
+  //       </IonReactRouter>
+  //     </IonApp>
+  //   );
+  // }
 
   return (
     <IonApp>
@@ -77,10 +78,11 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main" placeholder={null}>
             <Redirect exact from="/" to="/dashboard" />
-            <Redirect exact from="/login" to="/dashboard" />
+            {/* <Redirect exact from="/login" to="/dashboard" /> */}
             <Route exact path="/login" component={Login} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/roles" component={RolesPage} />
+            <Route path="/employees" component={EmployeesPage} />
             <Route path="/profile" component={Profile} />
             <Route render={() => <Redirect to="/dashboard" />} />
           </IonRouterOutlet>
