@@ -28,8 +28,8 @@ import {
 } from "ionicons/icons";
 import { Stack, Button } from "@mantine/core";
 import "./Menu.css";
-import { useStorage } from "../hooks/useStorage";
 import React from "react";
+import { useStorage } from "../hooks/useStorage";
 
 interface AppPage {
   url: string;
@@ -46,16 +46,10 @@ const appPages: AppPage[] = [
     mdIcon: gridSharp,
   },
   {
-    title: "Role Pengguna",
-    url: "/roles",
-    iosIcon: shieldCheckmarkOutline,
-    mdIcon: shieldCheckmarkSharp,
-  },
-  {
-    title: "Karyawan",
-    url: "/employee",
-    iosIcon: peopleOutline,
-    mdIcon: peopleSharp,
+    title: "Pesanan",
+    url: "/orders",
+    iosIcon: listOutline,
+    mdIcon: listSharp,
   },
   {
     title: "Profile",
@@ -65,7 +59,7 @@ const appPages: AppPage[] = [
   },
 ];
 
-const Menu: React.FC = () => {
+const MenuEmployee: React.FC = () => {
   const { user, clearAuthUser } = useStorage();
   const router = useIonRouter();
 
@@ -121,4 +115,4 @@ const Menu: React.FC = () => {
   );
 };
 
-export default Menu;
+export default MenuEmployee;

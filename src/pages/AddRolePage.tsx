@@ -18,7 +18,7 @@ import React, { useRef, useState } from "react";
 import { supabase } from "../api/supabaseClient";
 import { Link } from "react-router-dom";
 
-const AddRole: React.FC = () => {
+const AddRolePage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLIonInputElement>(null);
@@ -37,7 +37,7 @@ const AddRole: React.FC = () => {
         return;
       } else {
         try {
-          const res = await supabase.from("roles").insert([{ role: role }]);
+          const res = await supabase.from("roles").insert([{ role: (role).toLowerCase() }]);
           if (res.status == 201) {
             setMessage("Role berhasil ditambahkan");
             setIsOpen(true);
@@ -96,4 +96,4 @@ const AddRole: React.FC = () => {
   );
 };
 
-export default AddRole;
+export default AddRolePage;

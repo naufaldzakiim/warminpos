@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IonApp,
   IonRouterOutlet,
@@ -7,17 +7,12 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
+import { useStorage } from "./hooks/useStorage";
 import Menu from "./components/Menu";
-import MenuOwner from "./components/MenuOwner";
 import Dashboard from "./pages/Dashboard";
-import OrderList from "./pages/OrderList";
-import OrderDetail from "./pages/OrderDetail";
-import AddOrder from "./pages/AddOrder";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
-import RoleList from "./pages/RoleList";
-import AddRole from "./pages/AddRole";
-import EditRole from "./pages/EditRole";
+import RolesPage from "./pages/RolesPage";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -42,60 +37,55 @@ import "@mantine/core/styles.css";
 
 setupIonicReact();
 
-export const UserContext = createContext<any>(null);
-
 const App: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const { getAuthUser, isAuthUser } = useStorage();
+  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState<any>();
 
-  // if (user === null) {
-  //   return (
-  //     <IonApp>
-  //       <UserContext.Provider
-  //         value={{
-  //           user,
-  //           setUser,
-  //         }}
-  //       >
-  //         <IonReactRouter>
-  //           <IonRouterOutlet id="main" placeholder={null}>
-  //             <Redirect exact from="/" to="/login" />
-  //             <Route path="/login" component={Login} />
-  //             {/* <Route render={() => <Redirect to="/login" />} /> */}
-  //           </IonRouterOutlet>
-  //         </IonReactRouter>
-  //       </UserContext.Provider>
-  //     </IonApp>
-  //   );
-  // }
+  const getAuth = async () => {
+    const auth = await isAuthUser();
+    setIsAuth(auth);
+  }
+
+  useEffect(() => {
+    getAuth();
+  }, []);
+
+  useEffect(() => {
+    console.log("user di app", user);
+    console.log("isAuth di app", isAuth);
+  }, [user]);
+
+  if (!isAuth) {
+    return (
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet id="main" placeholder={null}>
+            <Route exact path="/login" component={Login} />
+            <Redirect exact from="/" to="/login" />
+            <Route render={() => <Redirect to="/login" />} />
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+    );
+  }
 
   return (
     <IonApp>
-      <UserContext.Provider
-        value={{
-          user,
-          setUser,
-        }}
-      >
-        <IonReactRouter>
-          <IonSplitPane contentId="main">
-            {/* {user.role == 1 && <MenuOwner/>} */}
-            {/* <MenuOwner /> */}
-            <Menu />
-            <IonRouterOutlet id="main" placeholder={null}>
-              <Redirect exact from="/" to="/dashboard" />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/orders" component={OrderList} />
-              <Route path="/orders/new" component={AddOrder} />
-              {/* <Route path="/orders/:id" component={OrderDetail} /> */}
-              <Route path="/roles" component={RoleList} />
-              <Route path="/roles/new" component={AddRole} />
-              <Route path="/roles/:id/edit" component={EditRole} />
-              <Route path="/profile" component={Profile} />
-              {/* <Route render={() => <Redirect to="/dashboard" />} /> */}
-            </IonRouterOutlet>
-          </IonSplitPane>
-        </IonReactRouter>
-      </UserContext.Provider>
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <Menu />
+          <IonRouterOutlet id="main" placeholder={null}>
+            <Redirect exact from="/" to="/dashboard" />
+            <Redirect exact from="/login" to="/dashboard" />
+            <Route exact path="/login" component={Login} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/roles" component={RolesPage} />
+            <Route path="/profile" component={Profile} />
+            <Route render={() => <Redirect to="/dashboard" />} />
+          </IonRouterOutlet>
+        </IonSplitPane>
+      </IonReactRouter>
     </IonApp>
   );
 };

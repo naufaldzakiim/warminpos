@@ -2,7 +2,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -11,16 +10,14 @@ import {
   IonButton,
   IonToast,
   IonIcon,
-  IonBackButton,
-  IonLabel,
   IonSpinner,
 } from "@ionic/react";
-import { add, arrowBack, save } from "ionicons/icons";
+import { arrowBack, save } from "ionicons/icons";
 import React, { useRef, useState, useEffect } from "react";
 import { supabase } from "../api/supabaseClient";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const EditRole: React.FC = () => {
+const EditRolePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [data, setData] = useState<any>();
   const [roleInput, setRoleInput] = useState<string>("");
@@ -147,4 +144,4 @@ const EditRole: React.FC = () => {
   );
 };
 
-export default EditRole;
+export default EditRolePage;

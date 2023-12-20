@@ -32,7 +32,7 @@ import {
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../api/supabaseClient";
 
-const RoleList: React.FC = () => {
+const RoleListPage: React.FC = () => {
   const [data, setData] = useState<any>([]);
   const pageDeleteConfirmation = useRef(null);
   const router = useIonRouter();
@@ -53,7 +53,10 @@ const RoleList: React.FC = () => {
         .select()
         .eq("deleted", false);
       console.log("ini response", response);
-      setData(response.data);
+      const newData = response?.data?.filter((item: any) => {
+        return item.role !== "owner";
+      });
+      setData(newData);
     } catch (error) {
       console.log(error);
     }
@@ -157,4 +160,4 @@ const RoleList: React.FC = () => {
   );
 };
 
-export default RoleList;
+export default RoleListPage;

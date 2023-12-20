@@ -4,17 +4,21 @@ import {
   IonPage,
   IonInput,
   IonImg,
-  IonToast
+  IonToast,
+  useIonRouter,
 } from "@ionic/react";
 import { Center, Box, Stack, Text } from "@mantine/core";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { useStorage } from "../hooks/useStorage";
 import { supabase } from "../api/supabaseClient";
-import { UserContext } from "../App";
 import { compareSync } from "bcrypt-ts";
+import { useHistory } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const { user, setUser } = useContext<any>(UserContext);
+  const { user, setAuthUser } = useStorage();
   const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+  const router = useIonRouter();
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
@@ -24,9 +28,9 @@ const Login: React.FC = () => {
     try {
       const response = await supabase
         .from("users")
-        .select('*, roles(role)')
+        .select("*, roles(role)")
         .eq("username", username);
-      
+
       console.log("ini response", response);
 
       if (response.data && response.data.length > 0) {
@@ -34,7 +38,10 @@ const Login: React.FC = () => {
         const isMatched = compareSync(password, user.password);
         console.log("isMatched", isMatched);
         if (isMatched) {
-          setUser(user);
+          const newData = { id: user.id, username: user.username, name: user.name, role: user.roles.role };
+          console.log("newData", newData);
+          const res = await setAuthUser(newData);
+          router.push("/dashboard", "root", "replace");
         } else {
           setIsOpen(true);
         }
@@ -71,7 +78,7 @@ const Login: React.FC = () => {
             name="username"
             labelPlacement="stacked"
             required
-            style={{borderBottom: "1px solid #ccc"}}
+            style={{ borderBottom: "1px solid #ccc" }}
           />
           <IonInput
             type="password"
@@ -79,7 +86,7 @@ const Login: React.FC = () => {
             name="password"
             labelPlacement="stacked"
             required
-            style={{borderBottom: "1px solid #ccc"}}
+            style={{ borderBottom: "1px solid #ccc" }}
           />
           <IonButton expand="block" type="submit">
             Login
