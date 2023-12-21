@@ -67,7 +67,6 @@ const EditEmployeePage: React.FC = () => {
       const res = response?.data![0];
       const store_id = res.id.substring(0, res.id.length - 9);
       const newData = { ...res, store_id: store_id };
-      console.log("ini store_id", store_id);
       setData(newData);
       setForm({
         id: newData.id,
@@ -136,13 +135,13 @@ const EditEmployeePage: React.FC = () => {
     const salt = genSaltSync(10);
     const hashedNewPassword = hashSync(newPassword, salt);
 
-    console.log("newUsername", newUsername);
-    console.log("newPassword", newPassword);
-    console.log("newName", newName);
-    console.log("newRole", newRole);
-    console.log("newStore", newStore);
+    // console.log("newUsername", newUsername);
+    // console.log("newPassword", newPassword);
+    // console.log("newName", newName);
+    // console.log("newRole", newRole);
+    // console.log("newStore", newStore);
 
-    console.log("data", data);
+    // console.log("data", data);
 
     const newData: any = {};
 
@@ -184,7 +183,7 @@ const EditEmployeePage: React.FC = () => {
         setMessage("Username sudah ada");
         setIsOpen(true);
       } else {
-        console.log("newData", newData);
+        // console.log("newData", newData);
 
         const res = await supabase
           .from("users")

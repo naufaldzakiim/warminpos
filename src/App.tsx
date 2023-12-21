@@ -43,19 +43,19 @@ const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState<any>();
 
-  const getAuth = async () => {
-    const auth = await isAuthUser();
-    setIsAuth(auth);
-  }
+  // const getAuth = async () => {
+  //   const auth = await isAuthUser();
+  //   setIsAuth(auth);
+  // }
 
-  useEffect(() => {
-    getAuth();
-  }, []);
+  // useEffect(() => {
+  //   getAuth();
+  // }, []);
 
-  useEffect(() => {
-    console.log("user di app", user);
-    console.log("isAuth di app", isAuth);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user di app", user);
+  //   console.log("isAuth di app", isAuth);
+  // }, [user]);
 
   // if (!isAuth) {
   //   return (
@@ -77,7 +77,7 @@ const App: React.FC = () => {
         <IonSplitPane contentId="main">
           <Menu />
           <IonRouterOutlet id="main" placeholder={null}>
-            <Redirect exact from="/" to="/dashboard" />
+            <Redirect exact from="/" to="/login" />
             {/* <Redirect exact from="/login" to="/dashboard" /> */}
             <Route exact path="/login" component={Login} />
             <Route path="/dashboard" component={Dashboard} />

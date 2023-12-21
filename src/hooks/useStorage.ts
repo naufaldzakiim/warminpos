@@ -26,9 +26,9 @@ export function useStorage() {
     initStorage();
   }, []);
 
-  useEffect(() => {
-    console.log("user di storage", user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("user di storage", user);
+  // }, [user]);
 
   const setAuthUser = async (user: User) => {
     await store?.set(USER_KEY, user);
@@ -48,7 +48,7 @@ export function useStorage() {
 
   const getAuthUser = async () => {
     const storedUser = await store?.get(USER_KEY);
-    console.log("storedUser get", storedUser);
+    // console.log("storedUser get", storedUser);
     return storedUser;
   }
 
