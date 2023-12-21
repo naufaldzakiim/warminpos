@@ -46,6 +46,10 @@ const EmployeeListPage: React.FC = () => {
     setPresentingElementDelete(pageDeleteConfirmation.current);
   }, []);
 
+  useEffect(() => {
+    getData();
+  }, [router]);
+
   const getData = async () => {
     try {
       const response = await supabase
@@ -133,7 +137,7 @@ const EmployeeListPage: React.FC = () => {
               <IonItemOptions side="end">
                 <IonItemOption
                   color="warning"
-                  routerLink={`/roles/${item.id}/edit`}
+                  routerLink={`/employees/${item.id}/edit`}
                 >
                   <IonIcon slot="icon-only" icon={pencil} />
                 </IonItemOption>

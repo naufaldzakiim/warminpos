@@ -11,14 +11,12 @@ import {
   IonButton,
   IonToast,
   IonIcon,
-  IonBackButton,
   IonSelect,
   IonSelectOption,
 } from "@ionic/react";
 import { add, arrowBack } from "ionicons/icons";
 import React, { useRef, useState, useEffect } from "react";
 import { supabase } from "../api/supabaseClient";
-import { Link } from "react-router-dom";
 import { genSaltSync, hashSync } from "bcrypt-ts";
 
 const AddEmployeePage: React.FC = () => {
@@ -47,37 +45,6 @@ const AddEmployeePage: React.FC = () => {
       const response = await supabase.from("stores").select("id, name");
       console.log("ini response", response);
       setStores(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onAddHandle = async (role: string) => {
-    try {
-      const response = await supabase
-        .from("roles")
-        .select("*", { count: "exact", head: true })
-        .eq("deleted", false)
-        .eq("role", role);
-
-      if (response.count && response.count > 0) {
-        setMessage("Role sudah ada");
-        setIsOpen(true);
-        return;
-      } else {
-        try {
-          const res = await supabase
-            .from("roles")
-            .insert([{ role: role.toLowerCase() }]);
-          if (res.status == 201) {
-            setMessage("Role berhasil ditambahkan");
-            setIsOpen(true);
-            return;
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
     } catch (error) {
       console.log(error);
     }

@@ -46,16 +46,19 @@ const RoleListPage: React.FC = () => {
     setPresentingElementDelete(pageDeleteConfirmation.current);
   }, []);
 
+  useEffect(() => {
+    getData();
+  }, [router]);
+
   const getData = async () => {
     try {
       const response = await supabase
         .from("roles")
         .select()
-        .eq("deleted", false);
+        .eq("deleted", false)
+        .neq("role", "owner");
       console.log("ini response", response);
-      const newData = response?.data?.filter((item: any) => {
-        return item.role !== "owner";
-      });
+      const newData = response.data
       setData(newData);
     } catch (error) {
       console.log(error);
